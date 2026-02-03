@@ -3,7 +3,7 @@
 import os
 import sys
 import time
-#import ujson
+import ujson
 
 CURR_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(CURR_DIR)
