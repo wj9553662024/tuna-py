@@ -32,8 +32,6 @@ def main(exchange, maker_params: list[MakerParameter], selftrade_params: list[Se
     else:
         return
 
-
-
 if __name__ == '__main__':
     maker_params = [
         MakerParameter({

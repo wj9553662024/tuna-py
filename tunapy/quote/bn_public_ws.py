@@ -1,13 +1,25 @@
 """ Binance Quote on WS
 """
 import os
+import sys
 import time
-import ujson
+#import ujson
 
+CURR_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(CURR_DIR)
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
+
+# JUMP_DIR = os.path.dirname(os.path.dirname(BASE_DIR))
+# if JUMP_DIR not in sys.path:
+#     sys.path.insert(0, JUMP_DIR)
+# print(CURR_DIR)
+# print(BASE_DIR)
+# print(JUMP_DIR)
+    
 from binance.websocket.spot.websocket_stream import SpotWebsocketStreamClient
-from common.utils.redis_client import DATA_REDIS_CLIENT
-from otcopus.utils.log_util import create_logger
-
+from octopuspy.utils.log_util import create_logger
+from utils.redis_client import DATA_REDIS_CLIENT
 
 # one munite = 600 * 100 ms
 ONE_MIN_HUNDRED_MS = 600
@@ -85,3 +97,7 @@ def bn_subscribe(depth_symbols: list[str], ticker_symbols: list[str]):
 
     while 1:
         time.sleep(1)
+    
+        
+if __name__ == "__main__":
+    print("run test")
