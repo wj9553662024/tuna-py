@@ -202,4 +202,7 @@ def okx_subscribe(depth_symbols: list[str], ticker_symbols: list[str]):
     """ subscribe partial depth or ticker of given symbols
     """
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(_forever_run(depth_symbols, ticker_symbols))
+    try:
+        loop.run_until_complete(_forever_run(depth_symbols, ticker_symbols))
+    finally:
+        loop.close()    # clear after loop finished

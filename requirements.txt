@@ -5,7 +5,7 @@ requests
 python-binance
 binance-connector
 # binance-sdk-spot
-# pydantic
+pydantic
 # binance-futures-connector
 
 python-okx
