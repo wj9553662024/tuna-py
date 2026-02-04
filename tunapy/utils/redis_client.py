@@ -25,7 +25,6 @@ def get_conn():
     except redis.RedisError:
         raise ConnectionError("Local node unavailable")
 
-
 def RDB():
     try:
         conn = get_conn()
@@ -35,43 +34,56 @@ def RDB():
         get_conn.cache_clear()
     except (redis.RedisError, ConnectionError):
         get_conn.cache_clear()
-
     raise ConnectionError("Redis server unavailable")
 
-
-# fundamental API
-def get_int(key: str) -> int:
-    """ get int value
+class DATA_REDIS_CLIENT():
     """
-    res = RDB().get(key)
-    if res:
-        return int(res)
-    return res
-
-def get_float(key: str) -> float:
-    """ get float value
+    # fundamental API
     """
-    res = RDB().get(key)
-    if res:
-        return float(res)
-    return 0.0
+    @classmethod
+    def set_int(cls, key: str, value:int):
+        """ set int value
+        """
+        if key:
+            RDB().set(key, int(value))
 
-def set_float(key: str, value: float):
-    """ set float value
-    """
-    if key:
-        RDB().set(key, float(value))
+    @classmethod
+    def get_int(cls, key: str) -> int:
+        """ get int value
+        """
+        res = RDB().get(key)
+        if res:
+            return int(res)
+        return res
 
-def get_dict(key: str) -> dict:
-    """ get dict object
-    """
-    res = RDB().get(key)
-    if res:
-        return json.loads(res)
-    return res
+    @classmethod
+    def get_float(cls, key: str) -> float:
+        """ get float value
+        """
+        res = RDB().get(key)
+        if res:
+            return float(res)
+        return 0.0
 
-def set_dict(key: str, value: dict):
-    """ set dict object
-    """
-    if key and value:
-        RDB().set(key, json.dumps(value))
+    @classmethod
+    def set_float(cls, key: str, value: float):
+        """ set float value
+        """
+        if key:
+            RDB().set(key, float(value))
+        
+    @classmethod
+    def get_dict(cls, key: str) -> dict:
+        """ get dict object
+        """
+        res = RDB().get(key)
+        if res:
+            return json.loads(res)
+        return res
+
+    @classmethod
+    def set_dict(cls, key: str, value: dict):
+        """ set dict object
+        """
+        if key and value:
+            RDB().set(key, json.dumps(value))

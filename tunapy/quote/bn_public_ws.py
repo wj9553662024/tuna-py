@@ -31,14 +31,12 @@ EXCHANGE_TICKER_PREFIX = 'bnst'
 CURR_PATH = os.path.dirname(os.path.abspath(__file__))
 LOGGER = create_logger(os.path.join(CURR_PATH, 'log'), "bn_pubws.log", "BN-PUBWS", 10)
 
-
 def _key(tag, ts):
     """ BiNance Spot
         The update period of Binance WS is 100ms.
         1 minutes have 60 * 10 = 600 (100ms)
     """
     return f'{EXCHANGE_DEPTH_PREFIX}{tag}{ts % ONE_MIN_HUNDRED_MS}'
-
 
 def _handle_orderbook_depth(rkey: str, req_ts: int, data: dict) -> dict:
     order_book = {
@@ -73,10 +71,8 @@ def message_handler(_, message):
             rkey = _key(pair, req_ts)
             # order book partial depth
             _handle_orderbook_depth(rkey, req_ts, message['data'])
-
         elif 'aggTrade' in message['stream']:
             _handle_ticker(message, req_ts)
-
 
 def error_handler(_, message):
     LOGGER.error(message)
@@ -97,7 +93,3 @@ def bn_subscribe(depth_symbols: list[str], ticker_symbols: list[str]):
 
     while 1:
         time.sleep(1)
-    
-        
-if __name__ == "__main__":
-    print("run test")
